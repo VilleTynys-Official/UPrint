@@ -11,9 +11,10 @@ Technologies & concepts used:
 Simple file saving app that can be used to save files into cloud and later print them out from a public printer.
 
 
-## First Sketch
+## Sketch
 
-![First sketch of how the app will work](pics/firstSketch.jpg)
+![sketch of how the app will work](materials/sketch1.png)
+![sketch of how the app will work](materials/sketch2.png)
 
 
 ## Requirements
