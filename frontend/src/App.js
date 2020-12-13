@@ -1,28 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import NavBar from './components/NavBar';
+import HomePage from './components/HomePage';
+import { Switch, Route } from 'react-router-dom';
+import PrintersPage from './components/PrintersPage';
+import SettingsPage from './components/SettingsPage';
+import HistoryPage from './components/HistoryPage';
 
-function App() {
-  let a = '123';
-
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavBar></NavBar>
+      <Switch>
+        <Route path="/home">
+          <HomePage></HomePage>
+        </Route>
+        <Route path="/printers">
+          <PrintersPage></PrintersPage>
+        </Route>
+        <Route path="/settings">
+          <SettingsPage></SettingsPage>
+        </Route>
+        <Route path="/history">
+          <HistoryPage></HistoryPage>
+        </Route>
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;
