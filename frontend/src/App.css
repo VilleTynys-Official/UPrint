@@ -1,17 +1,26 @@
-/*****APP******/
+/*****ELEMENTS******/
+a {
+  text-decoration: none;
+}
+
+/*****CLASSES******/
+/***APP***/
 .App {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-flow: column wrap;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
 /*HEADER*/
 .Header {
   flex: 0.1;
-  background: blue;
+  background: #292069;
 }
 
-/***MIDDLE SECTION (navbar & main)*/
+/*MIDDLE SECTION (navbar & main)*/
 .NavBar-Main-container {
   flex: 0.9;
   display: flex;
@@ -19,8 +28,8 @@
 }
 
 .NavBar-container {
-  flex: 0.1;
-  background: green;
+  flex: 0.1; /* 10% of Middle section row*/
+  background: #cdcdcd3d;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
@@ -28,15 +37,38 @@
 .NavBar {
   display: flex;
   flex-flow: column wrap;
+  margin-top: 30%;
+}
+
+.Link {
+  /*icon and text alignments*/
+  color: rgba(88, 88, 88, 0.806);
+  margin-top: 30%;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.Link-text {
+  margin-top: 0;
+  font-size: small;
+}
+
+.Link:hover {
+  color: rgb(22, 22, 22);
+  cursor: pointer;
+}
+
+.ActiveLink {
+  color: rgb(22, 22, 22);
 }
 
 .Main-container {
   flex: 0.9;
-  background: pink;
 }
 
 /*FOOTER*/
 .Footer {
   flex: 0.05;
-  background: rgb(195, 0, 255);
+  background: rgb(26, 26, 28);
 }
