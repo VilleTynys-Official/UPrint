@@ -6,16 +6,19 @@ import { Switch, Route } from 'react-router-dom';
 import PrintersPage from './components/PrintersPage/PrintersPage';
 import SettingsPage from './components/SettingsPage/SettingsPage';
 import HistoryPage from './components/HistoryPage/HistoryPage';
+import Header from './components/Header/Header';
 
 const App = () => {
   return (
-    <div className='App'>
-      <div className='Header'>Header</div>
+    <div className='App-container'>
       <div className='NavBar-Main-container'>
         <div className='NavBar-container'>
           <NavBar></NavBar>
         </div>
-        <div className='Main-container'>
+      </div>
+      <div className='Mother-container'>
+        <Header></Header>
+        <div className='Main'>
           <Switch>
             <Route path='/home'>
               <HomePage></HomePage>
@@ -31,9 +34,9 @@ const App = () => {
             </Route>
           </Switch>
         </div>
-      </div>
-      <div className='Footer'>
-        <p>Footer</p>
+        <div className='Footer'>
+          <p>Footer</p>
+        </div>
       </div>
     </div>
   );
