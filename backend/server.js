@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 const app = express();
 const authRoutes = require('./routes/authRoutes');
 const fileRoutes = require('./routes/fileRoutes');
-const userRoutes = require('./routes/userRoutes');
+const registerRoutes = require('./routes/registerRoutes');
 const PORT = process.env.PORT | 5000;
 
 //CONNECT TO DATABASE
@@ -13,7 +13,7 @@ connectDB();
 app.use(express.json({ extended: false })); //parser
 
 //ROUTES
-app.use('/api/users', userRoutes);
+app.use('/api/register', registerRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/files', fileRoutes);
 
