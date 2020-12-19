@@ -1,8 +1,10 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
-const User = require('../models/UserModel');
+const config = require('config');
+const UserModel = require('../models/UserModel');
 
 const signinValidator = [
   check('email', 'Please add email').not().isEmpty(),
@@ -13,7 +15,7 @@ const signinValidator = [
   ).isLength({ min: 6 }),
 ];
 
-// @route   POST api/users
+// @route   POST api/register
 // @desc    Register a user
 // @access  Public
 router.post('/', signinValidator, async (req, res) => {
@@ -24,24 +26,38 @@ router.post('/', signinValidator, async (req, res) => {
 
   const { email, password } = req.body;
   try {
-    let user = await User.findOne({ email: email });
+    let user = await UserModel.findOne({ email: email });
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
     //create mongoose document based on User model
-    user = new User({
+    user = new UserModel({
       email: email,
       password: password,
     });
 
-    //hash (password with salt) and save user to db
+    //PASSWORD PROCESS
+    //hash (password with salt) and save user to db.
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     await user.save(); //update db
-    res.send(user.password);
+
+    //TOKEN PROCESS
+    const payload = { user: { id: user.id } };
+
+    //10 hours
+    jwt.sign(
+      payload,
+      config.get('jwtSecret'),
+      { expiresIn: 60 * 60 * 10 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
   } catch (err) {
-    console.log(err.message);
+    console.log('Failed to register user. Reason: ', err.message);
     res.status(500).send('Server error');
   }
 });
