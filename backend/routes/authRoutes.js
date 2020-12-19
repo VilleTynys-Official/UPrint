@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const config = require('config');
+const auth = require('../middleware/auth');
 const UserModel = require('../models/UserModel');
 
 const signinValidator = [
@@ -12,10 +13,15 @@ const signinValidator = [
 ];
 
 // @route   GET api/auth
-// @desc    Get logged in User
+// @desc    Get logged in user data (except password)
 // @access  Private
-router.get('/', (req, res) => {
-  res.send('Get logged in user');
+router.get('/', auth, async (req, res) => {
+  try {
+    let user = await UserModel.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
 // @route   POST api/auth
