@@ -2,8 +2,12 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 /**
- * This middleware can be used to protect routes by checking that
- * the client has a valid token.
+ * Autherization middleware:
+ *
+ * 1. protects the routes by checking that
+ * the client has a valid token
+ *
+ * 2. adds user id from the token into the request.
  */
 
 module.exports = (req, res, next) => {
@@ -18,8 +22,9 @@ module.exports = (req, res, next) => {
     const decoded = jwt.verify(token, config.get('jwtSecret'));
     if (decoded) {
       req.user = decoded.user; //adds the user from the token to the request
-      next();
+      return next();
     }
+    throw err;
   } catch (err) {
     res.status(400).json({ msg: 'Token is not valid' });
   }
