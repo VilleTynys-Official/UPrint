@@ -6,7 +6,7 @@ const FileModel = require('../models/FileModel');
 const UserModel = require('../models/UserModel');
 
 const postFilesValidator = [
-  check('name', 'Name is required').not().isEmpty(),
+  check('filename', 'Filename is required').not().isEmpty(),
   check('uri', 'Uri is required').not().isEmpty(),
 ];
 
@@ -20,7 +20,7 @@ router.get('/', auth, async (req, res) => {
     });
     res.json(files);
   } catch (error) {
-    res.status(500).json({ msg: 'Internal server error' });
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -28,7 +28,12 @@ router.get('/', auth, async (req, res) => {
 // @desc    Post a file as a User
 // @access  Private
 router.post('/', [auth, postFilesValidator], async (req, res) => {
-  const { filename, uri, settings, readyToPrint } = req.body; //TODO add a check that these exist.
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+  }
+
+  const { filename, uri, settings, readyToPrint } = req.body;
 
   try {
     const newFile = new FileModel({
@@ -49,23 +54,63 @@ router.post('/', [auth, postFilesValidator], async (req, res) => {
     });
   } catch (err) {
     console.log('Error while posting a file. Reason: ', err);
-    res.status(500).json({ msg: 'Internal server error' });
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
 // @route   PUT api/files/:id
 // @desc    Update a file as a User
 // @access  Private
-router.put('/:id', (req, res) => {
-  res.send('Update file');
+router.put('/:id', auth, async (req, res) => {
+  const { filename, uri, settings, readyToPrint } = req.body;
+
+  //Build file object
+  const fileFields = {};
+  if (filename) fileFields.filename = filename;
+  if (uri) fileFields.uri = uri;
+  if (settings) fileFields.settings = settings;
+  if (readyToPrint) fileFields.readyToPrint = readyToPrint;
+
+  try {
+    let file = await FileModel.findById(req.params.id);
+    if (!file) return res.status(400).json({ msg: 'File not found' });
+
+    //Make sure user owns files
+    if (file.user.toString() !== req.user.id) {
+      return res.status(400).json({ msg: 'Not authorized' });
+    }
+    file = await FileModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: fileFields },
+      { new: true }
+    );
+    res.json({ file });
+  } catch (err) {
+    console.log('Updating files failed. Reason: ', err);
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
 // @route   DELETE api/files/:id
 // @desc    Delete a file as a User
 // @access  Private
-router.delete('/:id', (req, res) => {
-  let tempID = req.params.id; //REMOVE this example..
-  res.status(200).json({ tempID });
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    let file = await FileModel.findById(req.params.id);
+    if (!file) return res.status(400).json({ msg: 'File not found' });
+
+    //Make sure user owns files
+    if (file.user.toString() !== req.user.id) {
+      return res.status(400).json({ msg: 'Not authorized' });
+    }
+
+    await FileModel.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'File removed' });
+  } catch (err) {
+    console.log('Deleting file failed. Reason: ', err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+  res.status(200).json();
 });
 
 module.exports = router;
