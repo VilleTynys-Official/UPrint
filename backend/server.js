@@ -1,10 +1,21 @@
 const express = require('express');
-const apiRoutes = require('./routes/apiRoutes');
+const connectDB = require('./config/db');
 const app = express();
+const authRoutes = require('./routes/authRoutes');
+const fileRoutes = require('./routes/fileRoutes');
+const registerRoutes = require('./routes/registerRoutes');
 const PORT = process.env.PORT | 5000;
 
+//CONNECT TO DATABASE
+connectDB();
+
 //MIDDLEWARE
-app.use('/api', apiRoutes);
+app.use(express.json({ extended: false })); //parser
+
+//ROUTES
+app.use('/api/register', registerRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/files', fileRoutes);
 
 app.get('/', (req, res) => {
   console.log();
