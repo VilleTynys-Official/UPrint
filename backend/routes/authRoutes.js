@@ -25,7 +25,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route   POST api/auth
-// @desc    Authorize user with email and password & get token
+// @desc    Signin with email and password
 // @access  Public
 router.post('/', signinValidator, async (req, res) => {
   const errors = validationResult(req);
