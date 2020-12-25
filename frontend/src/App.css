@@ -14,7 +14,7 @@ a {
 }
 
 /*should stay fixed on the left side always*/
-.NavBar-container {
+.Navbar-container {
   width: 70px;
   /* height: 100%; */
   background: #cdcdcd3d;
@@ -32,7 +32,7 @@ a {
 }
 
 /***LOWER LEVEL CLASSES****/
-.NavBar {
+.Navbar {
   display: flex;
   flex-flow: column wrap;
 }

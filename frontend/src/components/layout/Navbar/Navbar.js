@@ -6,11 +6,11 @@ import MapIcon from '@material-ui/icons/Map';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
-import '../../App.css';
+import '../../../App.css';
 
-const NavBar = () => {
+const Navbar = () => {
   return (
-    <div className='NavBar'>
+    <div className='Navbar'>
       <NavLink className='Link' activeClassName='ActiveLink' to='/home'>
         {<FileCopyIcon fontSize={'large'} />}
         <p className='Link-text'>My Files</p>
@@ -35,11 +35,11 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;
 
-// const NavBar = () => {
+// const Navbar = () => {
 //   return (
-//     <div className='NavBar'>
+//     <div className='Navbar'>
 //       <List>
 //         <ListItem>
 //           <ListItemIcon>
@@ -76,4 +76,4 @@ export default NavBar;
 //   );
 // };
 
-// export default NavBar;
+// export default Navbar;
