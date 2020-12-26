@@ -3,7 +3,7 @@ a {
   text-decoration: none;
 }
 
-/*****CONTAINERS******/
+/*****LAYOUT CONTAINERS******/
 .App-container {
   width: 100%;
   height: 100vh;
@@ -23,8 +23,7 @@ a {
   align-items: center;
   padding-top: 6rem;
 }
-
-/*expands to fill right side of app*/
+/*expands to fill right side of app-container*/
 .Mother-container {
   display: flex;
   flex-grow: 1;
@@ -32,6 +31,8 @@ a {
 }
 
 /***LOWER LEVEL CLASSES****/
+
+/**NAVBAR**/
 .Navbar {
   display: flex;
   flex-flow: column wrap;
@@ -59,8 +60,10 @@ a {
   color: rgb(22, 22, 22);
 }
 
+/**HEADER**/
 .Header {
-  flex: 1;
+  /* flex: 1; */
+  height: 50px;
   background: #292069;
   display: flex;
   justify-content: flex-end;
@@ -68,10 +71,12 @@ a {
   flex-flow: row wrap;
 }
 
+/**MAIN**/
 .Main {
-  flex: 9;
+  flex: 10;
 }
 
+/**FOOTER**/
 .Footer {
   flex: 1;
   background: rgb(26, 26, 28);
