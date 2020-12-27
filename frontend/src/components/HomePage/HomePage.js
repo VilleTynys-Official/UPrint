@@ -1,11 +1,11 @@
 import React from 'react';
+import Files from '../Files/Files';
 
 const HomePage = () => {
   return (
-    <p>
-      Here you will see all the files that you have uploaded and their status
-      (printed, not printed etc.)
-    </p>
+    <div className='HomePage-container'>
+      <Files></Files>
+    </div>
   );
 };
 
