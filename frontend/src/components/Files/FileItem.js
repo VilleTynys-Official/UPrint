@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import './FileItem.css';
+import PropTypes from 'prop-types';
 
 const FileItem = ({ file }) => {
   return (
@@ -23,6 +23,10 @@ const FileItem = ({ file }) => {
       </div>
     </div>
   );
+};
+
+FileItem.propTypes = {
+  file: PropTypes.object.isRequired
 };
 
 export default FileItem;
