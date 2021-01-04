@@ -10,7 +10,8 @@ import StagedContext from './StagedContext';
 
 const StagedState = props => {
   const [stagedFile, setStagedFile] = useState({
-    stagedFile: { name: 'ThisDefaultShouldNotShow', data: '12342' }
+    name: 'This is a filename placeholder',
+    data: '12342'
   });
 
   return (

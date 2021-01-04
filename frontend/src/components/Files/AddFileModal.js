@@ -64,11 +64,8 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
   const { stagedFile, setStagedFile } = useContext(StagedContext);
   const classes = useStyles();
 
-  console.log('stagedFile in modal is : ', stagedFile);
-
   const handleClose = () => {
     console.log('handle closed clicked');
-
     setModalOpen(false);
   };
 
@@ -91,7 +88,7 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
               label='Filename'
               name='Filename'
               autoFocus
-              value={'Pull here filename from state..'}
+              value={stagedFile.name}
               // onChange={handleChange}
             />
             <FormControl variant='outlined' className={classes.formControl}>

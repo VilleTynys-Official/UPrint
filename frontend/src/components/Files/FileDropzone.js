@@ -25,7 +25,9 @@ export default class FileDropZone extends Component {
   handleSave(files) {
     //Saving files to StagedState for further use and closing Modal.
     this.props.setModalOpen(true);
-    this.context.setStagedFile(files);
+    // console.log('files are', files);
+
+    this.context.setStagedFile(files[0]); //pick only the first file
 
     this.setState({
       files: files,
