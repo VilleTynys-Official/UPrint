@@ -10,7 +10,7 @@ import StagedContext from './StagedContext';
 
 const StagedState = props => {
   const [stagedFile, setStagedFile] = useState({
-    stagedFile: { name: 'default', data: '12342' }
+    stagedFile: { name: 'ThisDefaultShouldNotShow', data: '12342' }
   });
 
   return (

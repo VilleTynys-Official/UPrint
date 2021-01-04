@@ -91,6 +91,8 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
               label='Filename'
               name='Filename'
               autoFocus
+              value={'Pull here filename from state..'}
+              // onChange={handleChange}
             />
             <FormControl variant='outlined' className={classes.formControl}>
               <InputLabel htmlFor='outlined-age-native-simple'>
@@ -142,8 +144,8 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
   return (
     <div>
       <Modal
-        open='true'
-        // open={modalOpen}
+        // open='true'
+        open={modalOpen}
         onClose={handleClose}
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
