@@ -24,11 +24,7 @@ export default class FileDropZone extends Component {
   }
 
   handleSave(files) {
-    //Update fileState and open AddFileModal
-    console.log(
-      'Context BEFORE setting current file in dropzone: ',
-      this.context
-    );
+    //Updates fileState and opens AddFileModal
     this.props.setModalOpen(true);
     this.context.setCurrentFile({
       filename: files[0].name, //here we pick the information from dropzone and add them to files state
