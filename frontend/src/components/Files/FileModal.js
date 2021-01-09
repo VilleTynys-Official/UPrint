@@ -62,7 +62,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 // ADDFILEMODAL
-const AddFileModal = ({ modalOpen, setModalOpen }) => {
+/**
+ * This modal is used both for adding and editing files.
+ * @param editMode allows user to choose if the modal is in editing mode (so that it will not create new files)
+ * when user clicks save */
+
+const AddFileModal = ({ modalOpen, setModalOpen, editMode }) => {
   const classes = useStyles();
   const fileContext = useContext(FileContext);
   const {
@@ -75,8 +80,9 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
   } = fileContext.current;
 
   const onClose = () => {
-    console.log('handle closed clicked');
+    console.log('closing modal');
     setModalOpen(false);
+    fileContext.setCurrentFile('');
   };
 
   const onChange = event => {
@@ -89,7 +95,13 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
   const onSubmit = event => {
     event.preventDefault();
     console.log('User submitted file settings');
-    fileContext.addFile(fileContext.current);
+
+    if (editMode) {
+      console.log('editing mode chosen');
+      // fileContext.updateFile(fileContext.current);
+    } else {
+      fileContext.addFile(fileContext.current);
+    }
     fileContext.setCurrentFile(
       //   {
       //   date: '',
@@ -158,6 +170,7 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
                 variant='outlined'
                 color='primary'
                 className={classes.submit}
+                onClick={onClose}
               >
                 Cancel
               </Button>

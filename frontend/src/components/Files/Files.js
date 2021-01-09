@@ -4,7 +4,7 @@ import FileItem from '../Files/FileItem';
 import './Files.css';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import AddFileModal from './AddFileModal';
+import FileModal from './FileModal';
 import FileDropZone from './FileDropzone';
 
 /**PARENT COMPONENT FOR FILES
@@ -19,10 +19,7 @@ const Files = () => {
 
   return (
     <div>
-      <AddFileModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-      ></AddFileModal>
+      <FileModal modalOpen={modalOpen} setModalOpen={setModalOpen}></FileModal>
       <FileDropZone setModalOpen={setModalOpen}></FileDropZone>
       <div className='Files-container'>
         {files.map(file => (

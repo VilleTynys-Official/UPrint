@@ -52,21 +52,22 @@ const FileState = props => {
         readyToPrint: true,
         _id: '5fdf12c84f4fe3757fad12ae',
         user: '5fddb33969f57756ef4979b6',
-        filename: 'Deep lyrics',
+        filename: 'Deep lyrics vol2',
         uri: 'https://i.stack.imgur.com/E7q0K.png',
         settings: 'a4',
         __v: 0
       }
     ],
-    current: {
-      // date: '',
-      // readyToPrint: false,
-      // _id: '', // Default values
-      // user: '',
-      // filename: '',
-      // uri: '',
-      // settings: ''
-    }
+    current: ''
+    //{
+    // date: '',
+    // readyToPrint: false,
+    // _id: '', // Default values
+    // user: '',
+    // filename: '',
+    // uri: '',
+    // settings: ''
+    //}
   };
 
   const [state, dispatch] = useReducer(fileReducer, initialState);
