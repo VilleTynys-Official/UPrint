@@ -29,7 +29,15 @@ export default (state, action) => {
     case CLEAR_CURRENT:
       return {
         ...state,
-        current: null
+        current: ''
+      };
+    case UPDATE_FILE:
+      console.log('updating file.. Action payload is', action.payload);
+      return {
+        ...state,
+        files: state.files.map(file =>
+          file._id === action.payload._id ? action.payload : file
+        )
       };
     default:
       return state;

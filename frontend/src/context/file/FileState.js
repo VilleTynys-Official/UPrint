@@ -92,11 +92,15 @@ const FileState = props => {
   };
 
   // Clear Current file
+  // Not sure if needed.. so remove later if not used.
   const clearCurrentFile = () => {
     dispatch({ type: CLEAR_CURRENT });
   };
 
   // Update file
+  const updateFile = file => {
+    dispatch({ type: UPDATE_FILE, payload: file });
+  };
 
   // Filter files
 
@@ -110,7 +114,8 @@ const FileState = props => {
         addFile,
         deleteFile,
         setCurrentFile,
-        clearCurrentFile
+        clearCurrentFile,
+        updateFile
       }}
     >
       {props.children}

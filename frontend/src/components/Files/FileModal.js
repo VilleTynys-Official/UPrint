@@ -86,19 +86,16 @@ const AddFileModal = ({ modalOpen, setModalOpen, editMode }) => {
   };
 
   const onChange = event => {
-    console.log('event.target name is:', event.target.name);
     fileContext.setCurrentFile({
+      ...fileContext.current,
       [event.target.name]: event.target.value
     });
   };
 
   const onSubmit = event => {
     event.preventDefault();
-    console.log('User submitted file settings');
-
     if (editMode) {
-      console.log('editing mode chosen');
-      // fileContext.updateFile(fileContext.current);
+      fileContext.updateFile(fileContext.current);
     } else {
       fileContext.addFile(fileContext.current);
     }
