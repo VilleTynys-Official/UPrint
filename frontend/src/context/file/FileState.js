@@ -59,13 +59,13 @@ const FileState = props => {
       }
     ],
     current: {
-      date: '',
-      readyToPrint: false,
-      _id: '', // Default values
-      user: '',
-      filename: '',
-      uri: '',
-      settings: ''
+      // date: '',
+      // readyToPrint: false,
+      // _id: '', // Default values
+      // user: '',
+      // filename: '',
+      // uri: '',
+      // settings: ''
     }
   };
 
@@ -76,7 +76,7 @@ const FileState = props => {
   // Add file
   // Later this will do the handling with backend.
   const addFile = file => {
-    file.id = uuid(); //creating a random id for testing (mongo can generate this later..)
+    file._id = uuid(); //creating a random id for testing (mongo can generate this later..)
     dispatch({ type: ADD_FILE, payload: file });
   };
 

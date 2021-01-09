@@ -25,8 +25,8 @@ const Files = () => {
       ></AddFileModal>
       <FileDropZone setModalOpen={setModalOpen}></FileDropZone>
       <div className='Files-container'>
-        {files.map((file, id) => (
-          <FileItem key={id} file={file}></FileItem>
+        {files.map(file => (
+          <FileItem key={file._id} file={file}></FileItem>
         ))}
       </div>
     </div>
