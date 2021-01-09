@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './FileItem.css';
 import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import FileContext from '../../context/file/FileContext';
 
 const FileItem = ({ file }) => {
-  const { uri, filename, readyToPrint } = file;
+  const { _id, uri, filename, readyToPrint } = file;
+  const fileContext = useContext(FileContext);
+  const { deleteFile, setCurrentFile } = fileContext;
 
   const handleChange = event => {
     console.log(
@@ -16,11 +19,16 @@ const FileItem = ({ file }) => {
     );
   };
 
+  const onDelete = () => {
+    console.log('onDelete clicked');
+    deleteFile(_id);
+  };
+
   return (
     <div className='card'>
       <div className='filebuttons'>
-        <button>Edit</button>
-        <button>X</button>
+        <button onClick={() => setCurrentFile(file)}>Edit</button>
+        <button onClick={() => onDelete}>X</button>
       </div>
       <img
         src={uri}

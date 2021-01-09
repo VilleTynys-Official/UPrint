@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { DropzoneDialog } from 'material-ui-dropzone';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import StagedContext from '../../context/staged/StagedContext';
+import FileContext from '../../context/file/FileContext';
 
 export default class FileDropZone extends Component {
   constructor(props) {
@@ -14,7 +14,8 @@ export default class FileDropZone extends Component {
     };
   }
 
-  static contextType = StagedContext;
+  // this is how context is used in classes
+  static contextType = FileContext;
 
   handleClose() {
     this.setState({
@@ -23,12 +24,17 @@ export default class FileDropZone extends Component {
   }
 
   handleSave(files) {
-    //Saving files to StagedState for further use and closing Modal.
+    //Update fileState and open AddFileModal
+    console.log(
+      'Context BEFORE setting current file in dropzone: ',
+      this.context
+    );
     this.props.setModalOpen(true);
-    // console.log('files are', files);
-
-    this.context.setStagedFile(files[0]); //pick only the first file
-
+    this.context.setCurrentFile({
+      filename: files[0].name, //here we pick the information from dropzone and add them to files state
+      size: files[0].size,
+      uri: files[0].path
+    });
     this.setState({
       files: files,
       open: false
@@ -69,3 +75,14 @@ export default class FileDropZone extends Component {
     );
   }
 }
+
+/**
+ * THIS IS DROPZONE GIVES OUT:
+lastModified: 1606314918938
+lastModifiedDate: Wed Nov 25 2020 16:35:18 GMT+0200 (Eastern European Standard Time) {}
+name: "VilleTynys..jpg"
+path: "VilleTynys..jpg"
+size: 1221239
+type: "image/jpeg"
+webkitRelativePath: ""
+ */

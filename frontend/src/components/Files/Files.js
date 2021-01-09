@@ -6,7 +6,6 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AddFileModal from './AddFileModal';
 import FileDropZone from './FileDropzone';
-import StagedContext from '../../context/staged/StagedContext';
 
 /**PARENT COMPONENT FOR FILES
  * modal, dropzone and files
