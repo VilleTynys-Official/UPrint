@@ -82,7 +82,6 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
   const onChange = event => {
     console.log('event.target name is:', event.target.name);
     fileContext.setCurrentFile({
-      ...fileContext.files,
       [event.target.name]: event.target.value
     });
   };
@@ -91,15 +90,18 @@ const AddFileModal = ({ modalOpen, setModalOpen }) => {
     event.preventDefault();
     console.log('User submitted file settings');
     fileContext.addFile(fileContext.current);
-    fileContext.setCurrentFile({
-      date: '',
-      readyToPrint: false,
-      _id: '', // cleanup
-      user: '',
-      filename: '',
-      uri: '',
-      settings: ''
-    });
+    fileContext.setCurrentFile(
+      //   {
+      //   date: '',
+      //   readyToPrint: false,
+      //   _id: '', // cleanup
+      //   user: '',
+      //   filename: '',
+      //   uri: '',
+      //   settings: ''
+      // }
+      ''
+    );
     setModalOpen(false);
   };
 

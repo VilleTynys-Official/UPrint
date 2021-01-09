@@ -21,6 +21,7 @@ const FileItem = ({ file }) => {
 
   const onDelete = () => {
     console.log('onDelete clicked');
+    setCurrentFile('');
     deleteFile(_id);
   };
 
@@ -28,7 +29,7 @@ const FileItem = ({ file }) => {
     <div className='card'>
       <div className='filebuttons'>
         <button onClick={() => setCurrentFile(file)}>Edit</button>
-        <button onClick={() => onDelete}>X</button>
+        <button onClick={() => onDelete()}>X</button>
       </div>
       <img
         src={uri}
