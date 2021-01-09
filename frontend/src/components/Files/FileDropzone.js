@@ -14,6 +14,7 @@ export default class FileDropZone extends Component {
     };
   }
 
+  // this is how context is used in classes
   static contextType = StagedContext;
 
   handleClose() {
@@ -24,11 +25,18 @@ export default class FileDropZone extends Component {
 
   handleSave(files) {
     //Saving files to StagedState for further use and closing Modal.
+    console.log(
+      'stagedFile before setting it in dropzone: ',
+      this.context.stagedFile
+    );
+
     this.props.setModalOpen(true);
-    // console.log('files are', files);
-
-    this.context.setStagedFile(files[0]); //pick only the first file
-
+    this.context.setStagedFile({
+      ...this.context.stagedFile,
+      filename: files[0].name, //here we pick the information from dropzone and add it to stagedFile
+      size: files[0].size,
+      uri: files[0].path
+    });
     this.setState({
       files: files,
       open: false
@@ -69,3 +77,14 @@ export default class FileDropZone extends Component {
     );
   }
 }
+
+/**
+ * THIS IS DROPZONE GIVES OUT:
+lastModified: 1606314918938
+lastModifiedDate: Wed Nov 25 2020 16:35:18 GMT+0200 (Eastern European Standard Time) {}
+name: "VilleTynys..jpg"
+path: "VilleTynys..jpg"
+size: 1221239
+type: "image/jpeg"
+webkitRelativePath: ""
+ */

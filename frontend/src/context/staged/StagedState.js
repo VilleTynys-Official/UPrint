@@ -16,7 +16,7 @@ const StagedState = props => {
     readyToPrint: true,
     _id: '',
     user: '',
-    filename: '',
+    filename: 'default filename',
     uri: '',
     settings: 'a4',
     size: 0

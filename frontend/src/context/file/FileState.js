@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import FileContext from './FileContext';
 import fileReducer from './fileReducer';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../types';
 
 const FileState = props => {
-  //Just for testing out (later from db)
+  //Just for testing out (later this state "lives" in db)
   const initialState = {
     files: [
       {
@@ -62,9 +62,19 @@ const FileState = props => {
 
   const [state, dispatch] = useReducer(fileReducer, initialState);
 
+  //EVENT HANDLERS
+
   // Add file
+  // Later this will do the handling with backend.
+  const addFile = file => {
+    file.id = uuid(); //creating a random id for testing (mongo can generate this later..)
+    dispatch({ type: ADD_FILE, payload: file });
+  };
 
   // Delete file
+  const deleteFile = _id => {
+    dispatch({ type: DELETE_FILE, payload: _id });
+  };
 
   // Set current file
 
@@ -77,7 +87,13 @@ const FileState = props => {
   // Clear filter
 
   return (
-    <FileContext.Provider value={{ files: state.files }}>
+    <FileContext.Provider
+      value={{
+        files: state.files,
+        addFile,
+        deleteFile
+      }}
+    >
       {props.children}
     </FileContext.Provider>
   );
