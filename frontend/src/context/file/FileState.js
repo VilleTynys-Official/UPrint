@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import FileContext from './FileContext';
 import fileReducer from './fileReducer';
 import {
@@ -14,7 +14,7 @@ import {
 } from '../types';
 
 const FileState = props => {
-  //Just for testing out (later from db)
+  //Just for testing out (later this state "lives" in db)
   const initialState = {
     files: [
       {
@@ -52,32 +52,72 @@ const FileState = props => {
         readyToPrint: true,
         _id: '5fdf12c84f4fe3757fad12ae',
         user: '5fddb33969f57756ef4979b6',
-        filename: 'Deep lyrics',
+        filename: 'Deep lyrics vol2',
         uri: 'https://i.stack.imgur.com/E7q0K.png',
         settings: 'a4',
         __v: 0
       }
-    ]
+    ],
+    current: ''
+    //{
+    // date: '',
+    // readyToPrint: false,
+    // _id: '', // Default values
+    // user: '',
+    // filename: '',
+    // uri: '',
+    // settings: ''
+    //}
   };
 
   const [state, dispatch] = useReducer(fileReducer, initialState);
 
+  //EVENT HANDLERS
+
   // Add file
+  // Later this will do the handling with backend.
+  const addFile = file => {
+    file._id = uuid(); //creating a random id for testing (mongo can generate this later..)
+    dispatch({ type: ADD_FILE, payload: file });
+  };
 
   // Delete file
+  const deleteFile = _id => {
+    dispatch({ type: DELETE_FILE, payload: _id });
+  };
 
   // Set current file
+  const setCurrentFile = file => {
+    dispatch({ type: SET_CURRENT, payload: file });
+  };
 
   // Clear Current file
+  // Not sure if needed.. so remove later if not used.
+  const clearCurrentFile = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // Update file
+  const updateFile = file => {
+    dispatch({ type: UPDATE_FILE, payload: file });
+  };
 
   // Filter files
 
   // Clear filter
 
   return (
-    <FileContext.Provider value={{ files: state.files }}>
+    <FileContext.Provider
+      value={{
+        current: state.current,
+        files: state.files,
+        addFile,
+        deleteFile,
+        setCurrentFile,
+        clearCurrentFile,
+        updateFile
+      }}
+    >
       {props.children}
     </FileContext.Provider>
   );

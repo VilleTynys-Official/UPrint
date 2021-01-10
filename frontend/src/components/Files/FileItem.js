@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './FileItem.css';
 import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import FileContext from '../../context/file/FileContext';
+import FileModal from './FileModal';
 
 const FileItem = ({ file }) => {
-  const { uri, filename, readyToPrint } = file;
+  const { _id, uri, filename, readyToPrint } = file;
+  const fileContext = useContext(FileContext);
+  const { deleteFile, setCurrentFile } = fileContext;
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleChange = event => {
     console.log(
@@ -16,11 +21,27 @@ const FileItem = ({ file }) => {
     );
   };
 
+  const handeEditClick = () => {
+    setCurrentFile(file);
+    setModalOpen(true);
+  };
+
+  const onDelete = () => {
+    console.log('onDelete clicked');
+    setCurrentFile('');
+    deleteFile(_id);
+  };
+
   return (
     <div className='card'>
+      <FileModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        editMode={true}
+      ></FileModal>
       <div className='filebuttons'>
-        <button>Edit</button>
-        <button>X</button>
+        <button onClick={() => handeEditClick()}>Edit</button>
+        <button onClick={() => onDelete()}>X</button>
       </div>
       <img
         src={uri}
