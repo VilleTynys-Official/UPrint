@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar/Navbar';
 import HomePage from './components/HomePage/HomePage';
@@ -9,12 +9,22 @@ import HistoryPage from './components/HistoryPage/HistoryPage';
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import FileState from './context/file/FileState';
+import Login from './components/Login/Login';
+import Register from './components/Login/Register';
+import AuthContext from './context/auth/AuthContext';
+
+/** APP LOGIC EXPLAINED:
+ * Basically, the application is divided into two depending if user is signed in or not:
+ *  1. Signin and register pages for those who are NOT AUTHENTICATED
+ *  2. Application pages for those who are AUTHENTICATED.
+ */
 
 const App = () => {
-  const [isLoggedin, setLoggedin] = useState(false);
-  console.log('is user logged in: ', isLoggedin);
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated } = authContext;
+  console.log('isAuthenticated says: ', isAuthenticated);
 
-  return isLoggedin ? (
+  return isAuthenticated ? (
     <FileState>
       <div className='App-container'>
         <div className='Navbar-container'>
@@ -35,8 +45,11 @@ const App = () => {
       </div>
     </FileState>
   ) : (
-    <div>
-      <button onClick={() => setLoggedin(true)}>Login</button>
+    <div className='App-container'>
+      <Switch>
+        <Route exact path='/' component={Login}></Route>
+        <Route exact path='/register' component={Register}></Route>
+      </Switch>
     </div>
   );
 };
