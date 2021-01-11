@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom'; // Used as Material ui Link component parameter to the regular routing behavior
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -29,9 +29,40 @@ const useStyles = makeStyles(() => ({
 
 export default function Register() {
   const classes = useStyles();
+  const [error, setError] = useState('');
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+    password2: ''
+  });
 
-  const onSubmit = () => {
-    console.log('submitted email and password');
+  const { email, password, password2 } = user;
+
+  const onSubmit = event => {
+    event.preventDefault();
+
+    // some simple validation
+    console.log('information is: ', email, password);
+    if (email === '' || password === '' || password2 === '') {
+      setError('Please fill all fields');
+      return;
+    }
+    if (password !== password2) {
+      setError('Passwords do not match');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Passwords length must be over 6 characters');
+      return;
+    } else {
+      setError(null);
+      console.log('submitted email and password');
+    }
+  };
+
+  const onChange = event => {
+    setError('');
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
   return (
@@ -44,8 +75,15 @@ export default function Register() {
         <Typography component='h1' variant='h5'>
           Register
         </Typography>
-        <form className={classes.form} noValidate onSubmit={() => onSubmit()}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={event => onSubmit(event)}
+        >
           <TextField
+            onChange={event => onChange(event)}
+            // error={error ? true : false}
+            // helperText={error ? error : ''}
             variant='outlined'
             margin='normal'
             required
@@ -57,6 +95,7 @@ export default function Register() {
             autoFocus
           />
           <TextField
+            onChange={event => onChange(event)}
             variant='outlined'
             margin='normal'
             required
@@ -67,6 +106,19 @@ export default function Register() {
             id='password'
             autoComplete='current-password'
           />
+          <TextField
+            onChange={event => onChange(event)}
+            variant='outlined'
+            margin='normal'
+            required
+            fullWidth
+            name='password2'
+            label='Confirm password'
+            type='password'
+            id='password2'
+            autoComplete='current-password'
+          />
+          <p style={{ color: 'red' }}>{error ? error : ''}</p>
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
             label='Remember me'
