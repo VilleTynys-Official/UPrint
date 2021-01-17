@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom'; // Used as Material ui Link component parameter to the regular routing behavior
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AuthContext from '../../context/auth/AuthContext';
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -29,39 +30,44 @@ const useStyles = makeStyles(() => ({
 
 export default function Register() {
   const classes = useStyles();
-  const [error, setError] = useState('');
+  const authContext = useContext(AuthContext);
+  const [validated, setValidated] = useState('');
   const [user, setUser] = useState({
     email: '',
     password: '',
     password2: ''
   });
 
+  const { registerUser, error } = authContext;
   const { email, password, password2 } = user;
 
   const onSubmit = event => {
     event.preventDefault();
 
     // some simple validation
-    console.log('information is: ', email, password);
     if (email === '' || password === '' || password2 === '') {
-      setError('Please fill all fields');
+      setValidated('Please fill all fields');
       return;
     }
     if (password !== password2) {
-      setError('Passwords do not match');
+      setValidated('Passwords do not match');
       return;
     }
     if (password.length < 6) {
-      setError('Passwords length must be over 6 characters');
+      setValidated('Passwords length must be over 6 characters');
       return;
     } else {
-      setError(null);
+      setValidated(null);
+      registerUser({
+        email,
+        password
+      });
       console.log('submitted email and password');
     }
   };
 
   const onChange = event => {
-    setError('');
+    setValidated('');
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
@@ -82,8 +88,6 @@ export default function Register() {
         >
           <TextField
             onChange={event => onChange(event)}
-            // error={error ? true : false}
-            // helperText={error ? error : ''}
             variant='outlined'
             margin='normal'
             required
@@ -118,7 +122,8 @@ export default function Register() {
             id='password2'
             autoComplete='current-password'
           />
-          <p style={{ color: 'red' }}>{error ? error : ''}</p>
+          <p style={{ color: 'red' }}>{validated ? validated : ''}</p>
+          <p style={{ color: 'red' }}>{error}</p>
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
             label='Remember me'
