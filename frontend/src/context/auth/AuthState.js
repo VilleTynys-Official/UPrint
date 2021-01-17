@@ -52,19 +52,19 @@ const AuthState = props => {
   const registerUser = async formData => {
     const config = {
       headers: {
-        'Content-type': 'application/json' // tells server what MIME type the request is
+        'Content-type': 'application/json' // tells server that MIME type of the request is json
       }
     };
     try {
       const res = await axios.post('/api/register', formData, config);
-      console.log('response is', res);
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: res.data //this will have the token
+        payload: res.data.token
       });
-      // loadUser();
+      loadUser();
     } catch (err) {
       console.log('register failed');
+      console.log('error iiiiis', err.response.data.msg);
 
       dispatch({
         type: REGISTER_FAIL,
@@ -74,8 +74,29 @@ const AuthState = props => {
   };
 
   // Login User
-  const loginUser = () => {
-    console.log('login user');
+  const loginUser = async formData => {
+    console.log('formdata', formData);
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json' // tells server that MIME type of the request is json
+      }
+    };
+    try {
+      const res = await axios.post('/api/auth', formData, config);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data.token
+      });
+      loadUser();
+    } catch (err) {
+      console.log('error is ', err);
+
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.msg
+      });
+    }
   };
 
   // Logout User
@@ -85,7 +106,7 @@ const AuthState = props => {
 
   // Clear errors
   const clearErrors = () => {
-    console.log('clear errors');
+    dispatch({ type: CLEAR_ERRORS });
   };
 
   return (

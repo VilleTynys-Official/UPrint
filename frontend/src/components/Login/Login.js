@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom'; // Used as Material ui Link component parameter to the regular routing behavior
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AuthContext from '../../context/auth/AuthContext';
 
 const useStyles = makeStyles(() => ({
   paper: {
@@ -29,9 +30,31 @@ const useStyles = makeStyles(() => ({
 
 export default function Login() {
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
+  const [validated, setValidated] = useState('');
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+  const { loginUser, clearErrors, error, isAuthenticated } = authContext;
+  const { email, password } = user;
 
-  const onSubmit = () => {
-    console.log('submitted email and password');
+  const onSubmit = event => {
+    event.preventDefault();
+
+    if (email === '' || password === '') {
+      setValidated('Please fill all fields');
+      return;
+    } else {
+      setValidated(null);
+      loginUser({ email, password });
+    }
+  };
+
+  const onChange = event => {
+    clearErrors();
+    setValidated(null);
+    setUser({ ...user, [event.target.name]: event.target.value });
   };
 
   return (
@@ -44,8 +67,13 @@ export default function Login() {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={() => onSubmit()}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={event => onSubmit(event)}
+        >
           <TextField
+            onChange={event => onChange(event)}
             variant='outlined'
             margin='normal'
             required
@@ -57,6 +85,7 @@ export default function Login() {
             autoFocus
           />
           <TextField
+            onChange={event => onChange(event)}
             variant='outlined'
             margin='normal'
             required
@@ -67,6 +96,8 @@ export default function Login() {
             id='password'
             autoComplete='current-password'
           />
+          <p style={{ color: 'red' }}>{validated ? validated : ''}</p>
+          <p style={{ color: 'red' }}>{error}</p>
           <FormControlLabel
             control={<Checkbox value='remember' color='primary' />}
             label='Remember me'

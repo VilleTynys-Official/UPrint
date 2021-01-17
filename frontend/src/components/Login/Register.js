@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom'; // Used as Material ui Link component parameter to the regular routing behavior
+import React, { useState, useContext, useEffect } from 'react';
+import { Link as RouterLink, Redirect } from 'react-router-dom'; // Used as Material ui Link component parameter to the regular routing behavior
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
   submit: {}
 }));
 
-export default function Register() {
+const Register = props => {
   const classes = useStyles();
   const authContext = useContext(AuthContext);
   const [validated, setValidated] = useState('');
@@ -38,8 +38,14 @@ export default function Register() {
     password2: ''
   });
 
-  const { registerUser, error } = authContext;
+  const { registerUser, clearErrors, error, isAuthenticated } = authContext;
   const { email, password, password2 } = user;
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     return <Redirect to='/home'></Redirect>;
+  //   }
+  // }, [isAuthenticated]);
 
   const onSubmit = event => {
     event.preventDefault();
@@ -67,6 +73,7 @@ export default function Register() {
   };
 
   const onChange = event => {
+    clearErrors();
     setValidated('');
     setUser({ ...user, [event.target.name]: event.target.value });
   };
@@ -155,4 +162,6 @@ export default function Register() {
       <Box mt={8}></Box>
     </Container>
   );
-}
+};
+
+export default Register;
