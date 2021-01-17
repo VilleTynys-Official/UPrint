@@ -7,11 +7,11 @@ const config = require('config');
 const UserModel = require('../models/UserModel');
 
 const signinValidator = [
-  check('email', 'Please add email').not().isEmpty(),
-  check('email', 'Please include a valid email').isEmail(),
+  check('email', 'Please add email.').not().isEmpty(),
+  check('email', 'Please include a valid email.').isEmail(),
   check(
     'password',
-    'Please enter a password with 6 or more characters'
+    'Please enter a password with 6 or more characters.'
   ).isLength({ min: 6 }),
 ];
 
@@ -21,7 +21,8 @@ const signinValidator = [
 router.post('/', signinValidator, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }); //returns []
+    return res.status(400).json({ msg: errors.array()[0].msg }); //returns the first reason for failure as a message
+    // return res.status(400).json({ msg: errors.array() }); //returns []
   }
 
   const { email, password } = req.body;
