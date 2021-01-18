@@ -17,13 +17,14 @@ import './App.css';
 
 /** APP LOGIC EXPLAINED:
  * Basically:
- *  1. Signin and register pages redirect to home when AUTHENTICATED
- *  2. Application pages redirect to '/' when NOT AUTHENTICATED.
+ *  1. login and register pages redirect to home when AUTHENTICATED.
+ *  2. if NOT AUTHENTICATED, Application pages redirect to '/' (which is login).
  *
  *
  */
 
 // this is utility function for axios requests (sets token into headers).
+// it is here to make sure that the token is set if it exists in the localStorage.
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -44,7 +45,7 @@ const App = () => {
           ''
         )}
         <div className='Mother-container'>
-          <Header></Header>
+          {isAuthenticated ? <Header></Header> : ''}
           <div className='Main'>
             <Switch>
               <Route
@@ -113,40 +114,5 @@ const App = () => {
     </FileState>
   );
 };
-
-// const App = () => {
-//   const authContext = useContext(AuthContext);
-//   const { isAuthenticated } = authContext;
-//   console.log('isAuthenticated says: ', isAuthenticated);
-
-//   return isAuthenticated ? (
-//     <FileState>
-//       <div className='App-container'>
-//         <div className='Navbar-container'>
-//           <Navbar></Navbar>
-//         </div>
-//         <div className='Mother-container'>
-//           <Header></Header>
-//           <div className='Main'>
-//             <Switch>
-//               <Route exact path='/home' component={HomePage}></Route>
-//               <Route exact path='/printers' component={PrintersPage}></Route>
-//               <Route exact path='/settings' component={SettingsPage}></Route>
-//               <Route exact path='/history' component={HistoryPage}></Route>
-//             </Switch>
-//           </div>
-//           <Footer></Footer>
-//         </div>
-//       </div>
-//     </FileState>
-//   ) : (
-//     <div className='App-container'>
-//       <Switch>
-//         <Route exact path='/' component={Login}></Route>
-//         <Route exact path='/register' component={Register}></Route>
-//       </Switch>
-//     </div>
-//   );
-// };
 
 export default App;
