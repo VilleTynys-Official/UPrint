@@ -24,7 +24,7 @@ import {
 const AuthState = props => {
   const initialState = {
     token: localStorage.getItem('token'),
-    isAuthenticated: null,
+    isAuthenticated: null, // @TODO Make this so that AuthState is checked and updated into localstorage
     loading: true,
     user: null,
     error: null
@@ -101,7 +101,14 @@ const AuthState = props => {
 
   // Logout User
   const logoutUser = () => {
-    console.log('logout user');
+    try {
+      dispatch({
+        type: LOGOUT
+      });
+      console.log('user was logged out');
+    } catch (err) {
+      console.log('error is ', err);
+    }
   };
 
   // Clear errors
