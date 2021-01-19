@@ -8,10 +8,18 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../../../App.css';
 import AuthContext from '../../../context/auth/AuthContext';
+import FileContext from '../../../context/file/FileContext';
 
 const Navbar = () => {
-  const authcontext = useContext(AuthContext);
-  const { logoutUser } = authcontext;
+  const authContext = useContext(AuthContext);
+  const fileContext = useContext(FileContext);
+  const { logoutUser } = authContext;
+  const { clearFiles } = fileContext;
+
+  const onLogout = () => {
+    logoutUser();
+    clearFiles();
+  };
 
   return (
     <div className='Navbar'>
@@ -32,7 +40,7 @@ const Navbar = () => {
         <p className='Link-text'>Settings</p>
       </NavLink>
       <NavLink
-        onClick={() => logoutUser()}
+        onClick={() => onLogout()}
         className='Link'
         activeClassName='ActiveLink'
         to='/home'
