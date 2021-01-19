@@ -70,24 +70,18 @@ const useStyles = makeStyles(() => ({
 const AddFileModal = ({ modalOpen, setModalOpen, editMode }) => {
   const classes = useStyles();
   const fileContext = useContext(FileContext);
-  const {
-    date,
-    readyToPrint,
-    user,
-    filename,
-    uri,
-    settings
-  } = fileContext.current;
+  const { current, setCurrentFile, updateFile, addFile } = fileContext;
+  const { date, readyToPrint, user, filename, uri, settings } = current;
 
   const onClose = () => {
     console.log('closing modal');
     setModalOpen(false);
-    fileContext.setCurrentFile('');
+    setCurrentFile('');
   };
 
   const onChange = event => {
-    fileContext.setCurrentFile({
-      ...fileContext.current,
+    setCurrentFile({
+      ...current,
       [event.target.name]: event.target.value
     });
   };
@@ -95,11 +89,11 @@ const AddFileModal = ({ modalOpen, setModalOpen, editMode }) => {
   const onSubmit = event => {
     event.preventDefault();
     if (editMode) {
-      fileContext.updateFile(fileContext.current);
+      updateFile(current);
     } else {
-      fileContext.addFile(fileContext.current);
+      addFile(current);
     }
-    fileContext.setCurrentFile(
+    setCurrentFile(
       //   {
       //   date: '',
       //   readyToPrint: false,
