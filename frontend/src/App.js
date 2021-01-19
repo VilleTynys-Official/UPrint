@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Navbar from './components/layout/Navbar/Navbar';
 import HomePage from './components/HomePage/HomePage';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -8,11 +8,10 @@ import HistoryPage from './components/HistoryPage/HistoryPage';
 import Header from './components/layout/Header/Header';
 import Footer from './components/layout/Footer/Footer';
 import FileState from './context/file/FileState';
-import Login from './components/Login/Login';
-import Register from './components/Login/Register';
+import Login from './components/loginAndRegister/Login';
+import Register from './components/loginAndRegister/Register';
 import AuthContext from './context/auth/AuthContext';
 import setAuthToken from './utils/setAuthToken';
-import PrivateRoute from './utils/PrivateRoute';
 import './App.css';
 
 /** APP LOGIC EXPLAINED:
@@ -24,7 +23,7 @@ import './App.css';
  */
 
 // this is utility function for axios requests (sets token into headers).
-// it is here to make sure that the token is set if it exists in the localStorage.
+// it is here to make sure that the token is always set if it exists in the localStorage.
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
