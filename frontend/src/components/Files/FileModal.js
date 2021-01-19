@@ -61,7 +61,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-// ADDFILEMODAL
+// FILEMODAL
 /**
  * This modal is used both for adding and editing files.
  * @param editMode allows user to choose if the modal is in editing mode (so that it will not create new files)
@@ -93,18 +93,7 @@ const AddFileModal = ({ modalOpen, setModalOpen, editMode }) => {
     } else {
       addFile(current);
     }
-    setCurrentFile(
-      //   {
-      //   date: '',
-      //   readyToPrint: false,
-      //   _id: '', // cleanup
-      //   user: '',
-      //   filename: '',
-      //   uri: '',
-      //   settings: ''
-      // }
-      ''
-    );
+    setCurrentFile('');
     setModalOpen(false);
   };
 
