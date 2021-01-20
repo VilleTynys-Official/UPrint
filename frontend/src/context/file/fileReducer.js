@@ -11,7 +11,7 @@ import {
   FILE_ERROR
 } from '../types';
 
-//Note that reducer always returns a new state object (and thus React will update all the children)
+// Note that reducer always returns a new state object because of spread operator (and thus React will update all the children).
 export default (state, action) => {
   switch (action.type) {
     case GET_FILES:
@@ -51,7 +51,6 @@ export default (state, action) => {
         current: ''
       };
     case UPDATE_FILE:
-      console.log('updating file.. Action payload is', action.payload);
       return {
         ...state,
         files: state.files.map(file =>
@@ -62,7 +61,7 @@ export default (state, action) => {
     case FILE_ERROR:
       return {
         ...state,
-        errors: action.payload
+        error: action.payload
       };
     default:
       return state;

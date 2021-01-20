@@ -37,7 +37,7 @@ router.post('/', [auth, postFilesValidator], async (req, res) => {
 
   try {
     const newFile = new FileModel({
-      user: req.user.id,
+      user: req.user.id, //this comes from the auth middleware (which takes it from the token)
       filename: filename,
       uri: uri,
       settings: settings,
