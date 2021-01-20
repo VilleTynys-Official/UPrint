@@ -31,7 +31,7 @@ router.post('/', signinValidator, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log('Failed to authorize user. Reason: ', errors.msg);
-    res.status(400).json({ msg: errors.array() });
+    return res.status(400).json({ msg: errors.array()[0].msg }); //returns the first reason for failure as a message
   }
 
   //PASSWORD CHECK

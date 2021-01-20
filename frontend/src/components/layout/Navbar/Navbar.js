@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 import ReceiptIcon from '@material-ui/icons/Receipt';
@@ -7,8 +7,20 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import '../../../App.css';
+import AuthContext from '../../../context/auth/AuthContext';
+import FileContext from '../../../context/file/FileContext';
 
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+  const fileContext = useContext(FileContext);
+  const { logoutUser } = authContext;
+  const { clearFiles } = fileContext;
+
+  const onLogout = () => {
+    logoutUser();
+    clearFiles();
+  };
+
   return (
     <div className='Navbar'>
       <NavLink className='Link' activeClassName='ActiveLink' to='/home'>
@@ -27,7 +39,12 @@ const Navbar = () => {
         {<SettingsIcon fontSize={'large'} />}
         <p className='Link-text'>Settings</p>
       </NavLink>
-      <NavLink className='Link' activeClassName='ActiveLink' to='/logout'>
+      <NavLink
+        onClick={() => onLogout()}
+        className='Link'
+        activeClassName='ActiveLink'
+        to='/home'
+      >
         {<ExitToAppIcon fontSize={'large'} />}
         <p className='Link-text'>Logout</p>
       </NavLink>
@@ -36,44 +53,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// const Navbar = () => {
-//   return (
-//     <div className='Navbar'>
-//       <List>
-//         <ListItem>
-//           <ListItemIcon>
-//             <HomeIcon />
-//           </ListItemIcon>
-//           <Link to='/home'>Home</Link>
-//         </ListItem>
-//         <ListItem>
-//           <ListItemIcon>
-//             <MapIcon />
-//           </ListItemIcon>
-//           <Link to='/printers'>Printers</Link>
-//         </ListItem>
-//         <ListItem>
-//           <ListItemIcon>
-//             <FileCopyIcon />
-//           </ListItemIcon>
-//           <Link to='/history'>History</Link>
-//         </ListItem>
-//         <ListItem>
-//           <ListItemIcon>
-//             <SettingsIcon />
-//           </ListItemIcon>
-//           <Link to='/settings'>Settings</Link>
-//         </ListItem>
-//         <ListItem>
-//           <ListItemIcon>
-//             <ExitToAppIcon />
-//           </ListItemIcon>
-//           <Link to='/logout'>Logout</Link>
-//         </ListItem>
-//       </List>
-//     </div>
-//   );
-// };
-
-// export default Navbar;

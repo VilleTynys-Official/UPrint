@@ -1,14 +1,18 @@
 # UPrint
-A simple full-stack application with MERN stack. Will have user management and session management.
-
-Technologies & concepts used:
-- React
-- Express.js
-- MongoDB
-
+- [UPrint](#uprint)
+	- [Synopsis](#synopsis)
+	- [Technologies & concepts used:](#technologies--concepts-used)
+	- [Sketch](#sketch)
+	- [Requirements](#requirements)
+	- [List of bugs & things to fix](#list-of-bugs--things-to-fix)
 ## Synopsis
 
 Simple file saving app that can be used to save files into cloud and later print them out from a public printer.
+
+## Technologies & concepts used:
+- React
+- Express.js
+- MongoDB
 
 
 ## Sketch
@@ -30,3 +34,8 @@ Simple file saving app that can be used to save files into cloud and later print
 			Examples: https://www.toptal.com/freelance/why-design-documents-matter
 
 
+
+## List of bugs & things to fix
+  * MongoDB
+    * Frontend crashes if there are no users in the database.
+      * Priority:low, Storypoints: 2

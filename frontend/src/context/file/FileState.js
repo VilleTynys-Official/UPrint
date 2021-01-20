@@ -1,89 +1,79 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react';
-import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 import FileContext from './FileContext';
 import fileReducer from './fileReducer';
 import {
   ADD_FILE,
   DELETE_FILE,
+  GET_FILES,
+  CLEAR_FILES,
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_FILE,
   FILTER_FILES,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  FILE_ERROR
 } from '../types';
 
+/**   FILE TYPE EXAMPLE:
+date: '1608457836308',
+readyToPrint: true,
+_id: '5fdf1e6ef5bf797965df7016',
+user: '5fddb33969f57756ef4979b6',
+filename: 'Lyrics VERSION 5',
+uri: 'www',
+settings: 'a4',
+__v: 0
+*/
+
 const FileState = props => {
-  //Just for testing out (later this state "lives" in db)
   const initialState = {
-    files: [
-      {
-        date: '1608457836308',
-        readyToPrint: true,
-        _id: '5fdf1e6ef5bf797965df7016',
-        user: '5fddb33969f57756ef4979b6',
-        filename: 'Lyrics VERSION 5',
-        uri: 'www',
-        settings: 'a4',
-        __v: 0
-      },
-      {
-        date: '1608457378571',
-        readyToPrint: true,
-        _id: '5fdf1ccf2aca0a78d985f71c',
-        user: '5fddb33969f57756ef4979b6',
-        filename: 'xxx lyrics',
-        uri: 'www',
-        settings: 'a4',
-        __v: 0
-      },
-      {
-        date: '1608454675923',
-        readyToPrint: true,
-        _id: '5fdf12c64f4fe3757fad12ad',
-        user: '5fddb33969f57756ef4979b6',
-        filename: 'Deep lyrics',
-        uri: 'https://i.stack.imgur.com/E7q0K.png',
-        settings: 'a4',
-        __v: 0
-      },
-      {
-        date: '1608454675923',
-        readyToPrint: true,
-        _id: '5fdf12c84f4fe3757fad12ae',
-        user: '5fddb33969f57756ef4979b6',
-        filename: 'Deep lyrics vol2',
-        uri: 'https://i.stack.imgur.com/E7q0K.png',
-        settings: 'a4',
-        __v: 0
-      }
-    ],
-    current: ''
-    //{
-    // date: '',
-    // readyToPrint: false,
-    // _id: '', // Default values
-    // user: '',
-    // filename: '',
-    // uri: '',
-    // settings: ''
-    //}
+    files: null,
+    current: '',
+    error: null,
+    loading: null
   };
 
   const [state, dispatch] = useReducer(fileReducer, initialState);
 
-  //EVENT HANDLERS
+  /** EVENT HANDLERS
+   * Description:
+   *  Token (if it exists) for axios requests is provided already globally with setAuthToken-utility.
+   *
+   */
+
+  // get files
+  const getFiles = async () => {
+    try {
+      const res = await axios.get('/api/files');
+      dispatch({ type: GET_FILES, payload: res.data });
+    } catch (err) {
+      dispatch({ type: FILE_ERROR, payload: err.response.data.msg });
+    }
+  };
 
   // Add file
-  // Later this will do the handling with backend.
-  const addFile = file => {
-    file._id = uuid(); //creating a random id for testing (mongo can generate this later..)
-    dispatch({ type: ADD_FILE, payload: file });
+  const addFile = async file => {
+    try {
+      const config = {
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const res = await axios.post('/api/files', file, config);
+      dispatch({ type: ADD_FILE, payload: res.data.saved });
+    } catch (err) {
+      dispatch({ type: FILE_ERROR, payload: err.response.data.msg });
+    }
   };
 
   // Delete file
   const deleteFile = _id => {
     dispatch({ type: DELETE_FILE, payload: _id });
+  };
+
+  // Clear files
+  const clearFiles = () => {
+    dispatch({ type: CLEAR_FILES });
   };
 
   // Set current file
@@ -111,8 +101,12 @@ const FileState = props => {
       value={{
         current: state.current,
         files: state.files,
+        error: state.error,
+        loading: state.loading,
+        getFiles,
         addFile,
         deleteFile,
+        clearFiles,
         setCurrentFile,
         clearCurrentFile,
         updateFile
