@@ -67,8 +67,13 @@ const FileState = props => {
   };
 
   // Delete file
-  const deleteFile = _id => {
-    dispatch({ type: DELETE_FILE, payload: _id });
+  const deleteFile = async _id => {
+    try {
+      const res = await axios.delete(`/api/files/${_id}`);
+      dispatch({ type: DELETE_FILE, payload: _id });
+    } catch (err) {
+      dispatch({ type: FILE_ERROR, payload: err.response.data.msg });
+    }
   };
 
   // Clear files
@@ -88,8 +93,18 @@ const FileState = props => {
   };
 
   // Update file
-  const updateFile = file => {
-    dispatch({ type: UPDATE_FILE, payload: file });
+  const updateFile = async file => {
+    try {
+      const config = {
+        headers: { 'Content-Type': 'application/json' }
+      };
+      const res = await axios.put(`/api/files/${file._id}`, file, config);
+      console.log('response from server is: ', res.data);
+
+      dispatch({ type: UPDATE_FILE, payload: res.data.file });
+    } catch (err) {
+      dispatch({ type: FILE_ERROR, payload: err.response });
+    }
   };
 
   // Filter files
