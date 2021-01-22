@@ -21,23 +21,33 @@ import {
  * Axios url is using a proxy (that is setup in package.json).
  *
  */
-const AuthState = props => {
-  const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null, // @TODO Make this so that AuthState is checked and updated into localstorage
-    loading: true,
-    user: null,
-    error: null
-  };
 
+const getInitialState = () => {
+  if (sessionStorage.getItem('loginState') !== null) {
+    return JSON.parse(sessionStorage.getItem('loginState'));
+  } else {
+    return {
+      token: null,
+      isAuthenticated: null,
+      loading: true,
+      user: null,
+      error: null
+    };
+  }
+};
+
+console.log('authstate rendered');
+
+const AuthState = props => {
+  const initialState = getInitialState();
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   //EVENT HANDLERS
 
   // Load User
   const loadUser = async () => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token); // this is utility function for axios requests (sets token into headers)
+    if (sessionStorage.token) {
+      setAuthToken(sessionStorage.token); // this is utility function for axios requests (sets token into headers)
     }
 
     try {
@@ -94,7 +104,7 @@ const AuthState = props => {
 
       dispatch({
         type: LOGIN_FAIL,
-        payload: err
+        payload: err.response.data.msg
       });
     }
   };
@@ -107,7 +117,7 @@ const AuthState = props => {
       });
       console.log('user was logged out');
     } catch (err) {
-      console.log('error is ', err);
+      console.log('Error in logging out ', err);
     }
   };
 

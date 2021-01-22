@@ -9,30 +9,39 @@ import {
   AUTH_ERROR
 } from '../types';
 
+const saveToStorage = state => {
+  sessionStorage.setItem('loginState', JSON.stringify(state)); // sessionStorage needs to be type of String
+};
+
 export default (state, action) => {
+  let newState = {};
   switch (action.type) {
     case USER_LOADED:
-      return {
+      newState = {
         ...state,
         isAuthenticated: true,
         loading: false,
         user: action.payload
       };
+      saveToStorage(newState);
+      return newState;
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload);
-      return {
+      sessionStorage.setItem('token', action.payload);
+      newState = {
         ...state,
         token: action.payload,
         isAuthenticated: true,
         loading: false
       };
+      saveToStorage(newState);
+      return newState;
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
-      localStorage.removeItem('token');
-      return {
+      sessionStorage.removeItem('token');
+      newState = {
         ...state,
         token: null,
         isAuthenticated: false,
@@ -40,11 +49,15 @@ export default (state, action) => {
         user: null,
         error: action.payload
       };
+      saveToStorage(newState);
+      return newState;
     case CLEAR_ERRORS:
-      return {
+      newState = {
         ...state,
         error: null
       };
+      saveToStorage(newState);
+      return newState;
     default:
       return state;
   }
