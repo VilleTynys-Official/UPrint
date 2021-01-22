@@ -24,8 +24,8 @@ import './App.css';
 
 // this is utility function for axios requests (sets token into headers).
 // it is here to make sure that the token is always set if it exists in the localStorage.
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
+if (sessionStorage.token) {
+  setAuthToken(sessionStorage.token);
 }
 
 const App = () => {
