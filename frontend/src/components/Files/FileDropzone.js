@@ -46,7 +46,7 @@ export default class FileDropZone extends Component {
   render() {
     return (
       <div>
-        <div className='add-button'>
+        <div className='add-button' style={{ margin: '20px' }}>
           <Fab
             variant='extended'
             color='primary'
