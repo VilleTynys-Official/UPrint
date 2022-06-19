@@ -1,0 +1,6 @@
+{
+  //Mongo connection string. Choose your values and file save as default.json so that the config.js can use the values.
+  "mongoURI": "mongodb+srv://admin:<addpassword>@<clustername>.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "<addYourJWTSecret>"
+
+}
