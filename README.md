@@ -13,16 +13,20 @@ Simple file saving app that can be used to save files into cloud and later print
 - React
 - Express.js
 - MongoDB
+- Docker & Docker-compose
+- JWT Tokens
 
-## How to run
+## How to run using docker container for MongoDB
 ### Backend
-
-1. Create ./backend/config/default.json -file with your configurations. There is an example file in the folder. Basically you need a connection url for your mongo db database.
+1. Install docker, login to dockerhub and run `docker-compose up -d` in ./backend. This will start the mongodb container.
 2. Run `npm install` and then `npm run start`.
 
 ### Frontend
 3. Run `npm install` and then `npm run start`.
-4. Navigate to http://localhost:3000/ and create a user.
+4. Navigate to http://localhost:3000/. You should see a login page where you can register a user.
+
+## How to run locally using MongoDB Atlas
+Set up MongoDB Atlas. Then get use the application connection url in backend/config/default.json for mongoURI. Then continue from step 2. 
 
 
 

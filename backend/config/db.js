@@ -11,6 +11,8 @@ const connectDB = async () => {
       useCreateIndex: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
+      user: 'admin',
+      pass: 'test',
     });
     console.log('MongoDB connected!');
   } catch (err) {
