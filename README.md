@@ -18,11 +18,11 @@ Simple file saving app that can be used to save files into cloud and later print
 
 ## How to run using docker container for MongoDB
 ### Backend
-1. Install docker, login to dockerhub and run `docker-compose up -d` in ./backend. This will start the mongodb container.
-2. Run `npm install` and then `npm run start`.
+1. Install docker and login. In ./backend run `docker-compose up -d`. This will start the mongodb container.
+2. Then run `npm install` and `npm run start`. Backend should now be running (and be connected to the mongodb).
 
 ### Frontend
-3. Run `npm install` and then `npm run start`.
+3. In ./frontend run `npm install` and then `npm run start`. Frontend should now be running.
 4. Navigate to http://localhost:3000/. You should see a login page where you can register a user.
 
 ## How to run locally using MongoDB Atlas
