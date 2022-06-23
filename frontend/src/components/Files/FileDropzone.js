@@ -62,7 +62,15 @@ export default class FileDropZone extends Component {
           filesLimit={1}
           open={this.state.open}
           onSave={this.handleSave.bind(this)}
-          acceptedFiles={['image/jpeg', 'image/png', 'image/bmp', '.pdf*']}
+          acceptedFiles={[
+            'image/jpeg',
+            'image/png',
+            'image/bmp',
+            'application/pdf',
+            'application/rtf',
+            'text/plain',
+            'text/csv'
+          ]}
           showPreviews={true}
           maxFileSize={5000000}
           onClose={this.handleClose.bind(this)}
