@@ -50,7 +50,18 @@ Set up MongoDB Atlas. Then get use the application connection url in backend/con
 
 
 
-## List of bugs & things to fix
-  * MongoDB
+## List of possible features, bugs and things to fix
+  * Frontend
     * Frontend crashes if there are no users in the database.
       * Priority:low, Storypoints: 2
+  * Security
+    * Check uploading of files for security loopholes
+      * Priority:high if production otherwise low, Storypoints: 8
+  * Add displaying of images to modals (maybe test S3 bucket in AWS)
+  * Create the actual printing feature
+  * Add map snippet for printer locations
+  * Add history logs
+  * Add some settings 
+    * Possibility to remove user
+    * Billing options
+  * Make UI more beatiful and mobile friendly
