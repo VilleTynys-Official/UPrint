@@ -1,0 +1,30 @@
+
+
+
+server {
+   listen 80;
+   server_name ec2-54-152-112-11.compute-1.amazonaws.com;
+
+
+   #Front-end
+   location / {
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
+        proxy_pass         http://172.31.26.26:3000;
+   }
+
+   #Backend
+   location /api/ {
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
+        proxy_pass         http://172.31.26.26:5000;
+   }
+
+
+}
+
+
+
+
+
+

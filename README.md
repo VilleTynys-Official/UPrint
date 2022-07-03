@@ -7,7 +7,7 @@
 	- [List of bugs & things to fix](#list-of-bugs--things-to-fix)
 ## Synopsis
 
-Simple file saving app that can be used to save files into cloud and later print them out from a public printer.
+PoC for file saving app that could be used to save files into cloud and later print them out from a public printer.
 
 ## Technologies & concepts used:
 - React
@@ -30,24 +30,15 @@ Set up MongoDB Atlas. Then get use the application connection url in backend/con
 
 
 
-## Sketch
+## AWS deploy test notes
+Tested running the app in AWS EC2 instance (in dev mode). Here are some notes:
 
-
-## Requirements
-
-		- Application
-		- Public git (github, gitlab or bitbucket) to display the code and documentation
-		- Simple manual
-		- Simple software design document (4-5 pages of text plus the diagrams and explanations)
-			- Architecture design
-			- Class design
-			- Database design
-			- UI mocks
-			- Static and dynamic flow design (UML: use cases, class diagrams, sequence diagrams)
-			- Explanation of the technologies used
-			- Future (what could be added, changed etc)
-			Examples: https://www.toptal.com/freelance/why-design-documents-matter
-
+* Create EC2 and create security group for SSH login.
+* SSH Login and start mongoDB, backend and frontend.
+* Setup nginx
+  * Copy configuration in ./nginx-example-config-for-aws.txt and modify the IP addresses.
+  * `sudo apt update` `sudo apt upgrade` `sudo apt install nginx`
+  * `sudo service nginx start`. App should be now running in the public IP of server.
 
 
 ## List of possible features, bugs and things to fix
